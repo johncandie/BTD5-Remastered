@@ -14,8 +14,6 @@ var column = 18;
 
 var SquareSize =  50;
 
-var MapSelected = Map1;
-
 var Draw = Grass;
 
 function DrawMap() {

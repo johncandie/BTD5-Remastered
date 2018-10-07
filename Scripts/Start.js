@@ -9,6 +9,8 @@ function Start() {
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
 
+var MapSelected = Map1;
+
 let frame = 0;
 
 var Lifes;

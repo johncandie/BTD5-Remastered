@@ -16,24 +16,29 @@ var DartMonkeys = new Array();
 
 var DartMonkeyIsClicked = false;
 
+var DartMonkeyPos;
 
 function ClickedOnDartMonkey(){
   window.addEventListener("click", function(e) {
     clickX = e.pageX;
     clickY = e.pageY;
 
-    if(clickX >= (row*SquareSize)-(row*6)-15 && clickX <= ((row*SquareSize)-(row*6)-15)+50 && clickY >= 100 && clickY <=150 && Money >= DartMonkeyPrice){
+    if(clickX >= (row*SquareSize)-(row*6)-15 && clickX <= ((row*SquareSize)-(row*6)-15)+50 && clickY >= 100 && clickY <=150 && Money >= DartMonkeyPrice ){
       DartMonkeyIsClicked = true;
 
       window.addEventListener("mousemove", function(e){
       hoverX = e.pageX;
       hoverY = e.pageY;
-      //console.log((hoverY / SquareSize) * row + (hoverX / SquareSize));
-      if(MapSelected[(Math.floor(hoverY / SquareSize) * row + (hoverX / SquareSize))] == 1) console.log("hi");
+      //hoverX = Math.round((e.pageX / column) * SquareSize);
+      //hoverY = Math.round((e.pageY / row) * SquareSize);
+      //console.log((hoverY / SquareSize) * row + (hoverX / SquareSize))
      });
       window.addEventListener ("click", function(e) {
+        
         if(DartMonkeyIsClicked === true){
-          if(e.pageX < (row*SquareSize)-(row*6)-15 && e.pageY < (column*SquareSize)-(3*SquareSize)){
+          DartMonkeyPos = Math.round((e.pageY / SquareSize) * row + (e.pageX / SquareSize));
+          if(e.pageX < (row*SquareSize)-(row*6)-15 && e.pageY < (column*SquareSize)-(3*SquareSize) ){
+            console.log(DartMonkeyPos, MapSelected[DartMonkeyPos]);
             DartMonkeyIsClicked = false;
             DartMonkeys.push(new DartMonkey(e.pageX-25, e.pageY-25));
             Money -= DartMonkeyPrice;
@@ -45,7 +50,7 @@ function ClickedOnDartMonkey(){
 }
 function DartMonkeyDraw(){
   if(DartMonkeyIsClicked === true) {
-    context.drawImage(DartMonkeySrc, hoverX - 25 , hoverY - 25, 50, 50);
+    context.drawImage(DartMonkeySrc, hoverX, hoverY, 50, 50);
   }
   for(let i = 0; i < DartMonkeys.length; i++){
     DartMonkeys[i].draw();
