@@ -1,7 +1,9 @@
+
 var Bloon0 = new Image();
   Bloon0.src = "./Assets/Sprites/Bloon.png";
 var Bloon1 = new Image();
   Bloon1.src = "./Assets/Sprites/Bloon1.png";
+
 
 const Bloon = function(Level, x, y) {
 
@@ -57,20 +59,15 @@ const Bloon = function(Level, x, y) {
     if(Level == 3)  context.fillStyle = "green";
     if(Level == 4)  context.fillStyle = "yellow";
     if(Level == 5)  context.fillStyle = "deeppink";
-    //context.globalCompositeOperation = "source-in";
+    
     
     context.drawImage(Bloon0, this.x, this.y, 50, 50);
-    
-    context.fillRect(this.x, this.y, 50, 50);
-    
-    context.drawImage(Bloon1, this.x, this.y, 50, 50);
-    
-    //context.fillStyle = "black";
+
+    //mask.globalCompositeOperation="source-in";
     
     //context.fillRect(this.x, this.y, 50, 50);
     
-    //context.globalCompositeOperation = "destination-over";
-
+    //context.drawImage(Bloon1, this.x -2 , this.y -2, 52, 52);
   };
 
   this.move = function() {

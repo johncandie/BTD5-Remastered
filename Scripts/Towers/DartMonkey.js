@@ -2,7 +2,6 @@ var DartMonkeyPrice = 200;
 const DartMonkey = function(x, y){
   this.x = x; this.y = y;
   this.draw = function(){
-    console.log((this.y / SquareSize) * row + (this.x / SquareSize));
       context.drawImage(DartMonkeySrc, x, y, 50, 50);
   };
   DartMonkeyPrice = 200*Difficulty.Prices;
@@ -29,6 +28,8 @@ function ClickedOnDartMonkey(){
       window.addEventListener("mousemove", function(e){
       hoverX = e.pageX;
       hoverY = e.pageY;
+      //console.log((hoverY / SquareSize) * row + (hoverX / SquareSize));
+      if(MapSelected[(Math.floor(hoverY / SquareSize) * row + (hoverX / SquareSize))] == 1) console.log("hi");
      });
       window.addEventListener ("click", function(e) {
         if(DartMonkeyIsClicked === true){

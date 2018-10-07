@@ -1,4 +1,5 @@
-const context = document.querySelector("canvas").getContext("2d");
+const context = document.querySelector("#canvas").getContext("2d");
+//const mask = document.querySelector("#mask").getContext("2d");
 
 
 function Start() {
@@ -36,6 +37,10 @@ function Update(){ //This is for keeping the everything in game at the same size
 
   context.canvas.width = width;
   context.canvas.height = height;
+  
+  //mask.canvas.width = width;
+  //mask.canvas.height = height;
+ 
   DrawMap();
 
 //  bloon.animate(frame);
