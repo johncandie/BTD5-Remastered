@@ -36,7 +36,7 @@ function DisplayTowers(){
 
     for(let i = 0; i < Towers.length; i++){
       Towers[i].draw();
-      if(Towers[i].Pos === TowerPos) {
+      if(Towers[i].Pos == TowerPos) {
         PosTaken = true;
       } else {
         PosTaken = false;
