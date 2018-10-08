@@ -1,6 +1,6 @@
 var DartMonkeyPrice = 200;
-const DartMonkey = function(x, y){
-  this.x = x; this.y = y;
+const DartMonkey = function(x, y, Pos){
+  this.x = x; this.y = y; this.Pos = Pos;
   this.draw = function(){
       context.drawImage(DartMonkeySrc, x, y, 50, 50);
   };
@@ -8,10 +8,9 @@ const DartMonkey = function(x, y){
 };
 
 
-var DartMonkeyPos;
 
 function ClickedOnDartMonkey(){
-  //document.body.style.cursor = "none";
+  document.body.style.cursor = "none";
   
   TowerIsClicked = true;
   TowerSelected = DartMonkeySrc;
@@ -19,19 +18,19 @@ function ClickedOnDartMonkey(){
   window.addEventListener("mousemove", function(e){
     hoverX = e.pageX;
     hoverY = e.pageY;
-  //  console.log(hoverX, hoverY);
+    //console.log(hoverX, hoverY);
   });
   
   window.addEventListener ("click", function(e) {
-    if(TowerIsClicked === true){
-      DartMonkeyPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
-      if(MapSelected[DartMonkeyPos] == 1){
-        //{
+    if(TowerIsClicked){
+      TowerPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
+      if(MapSelected[TowerPos] == 1){
+        if(!PosTaken){
           TowerIsClicked = false;
-          Towers.push(new DartMonkey(e.pageX-25, e.pageY-25));
+          Towers.push(new DartMonkey(e.pageX-25, e.pageY-25, TowerPos));
           Money -= DartMonkeyPrice;
           document.body.style.cursor = "default";
-        //}
+        }
       }
     }
   });
