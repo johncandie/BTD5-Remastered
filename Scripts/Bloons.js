@@ -1,8 +1,7 @@
 
 var Bloon0 = new Image();
   Bloon0.src = "./Assets/Sprites/Bloon.png";
-var Bloon1 = new Image();
-  Bloon1.src = "./Assets/Sprites/Bloon1.png";
+var BloonSrc = new Image();
 
 
 const Bloon = function(Level, x, y) {
@@ -54,20 +53,22 @@ const Bloon = function(Level, x, y) {
   };
 
   this.draw = function(){
-    if(Level == 1)  mask.fillStyle = "#ff0000";
-    if(Level == 2)  mask.fillStyle = "#0000ff";
-    if(Level == 3)  mask.fillStyle = "#00ff00";
-    if(Level == 4)  mask.fillStyle = "yellow";
-    if(Level == 5)  mask.fillStyle = "deeppink";
+    //if(Level == 1)  mask.fillStyle = "#ff0000";
+    //if(Level == 2)  mask.fillStyle = "#0000ff";
+    //if(Level == 3)  mask.fillStyle = "#00ff00";
+    //if(Level == 4)  mask.fillStyle = "yellow";
+    //if(Level == 5)  mask.fillStyle = "deeppink";
     
     
-    mask.drawImage(Bloon0, this.x, this.y, 50, 50);
+    //
+    //mask.globalCompositeOperation="source-in";
+    //
+    //mask.fillRect(0, 0, width, height);
+    BloonSrc.src = `./Assets/Sprites/Bloon${Level}.png`;
     
-    mask.globalCompositeOperation="source-in";
-    
-    mask.fillRect(0, 0, width, height);
-    
-    context.drawImage(Bloon1, this.x -2 , this.y -2, 52, 52);
+    context.drawImage(BloonSrc, this.x , this.y, 50, 50);
+
+    context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
 
   this.move = function() {
