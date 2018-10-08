@@ -18,7 +18,6 @@ function ClickedOnDartMonkey(){
   window.addEventListener("mousemove", function(e){
     hoverX = e.pageX;
     hoverY = e.pageY;
-    //console.log(hoverX, hoverY);
   });
   
   window.addEventListener ("click", function(e) {

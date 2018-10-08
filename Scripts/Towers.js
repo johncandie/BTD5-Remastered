@@ -26,7 +26,7 @@ window.addEventListener("click", function(e) {
 window.addEventListener("keydown", function(e){
   if(e.keyCode === 81 &&  Money >= DartMonkeyPrice) {ClickedOnDartMonkey()}
   if(e.keyCode === 27){document.body.style.cursor = "default";TowerIsClicked = false;}
-  if(e.keyCode === 8){Towers.splice(0, Towers.length)}
+  //if(e.keyCode === 8){Towers.splice(0, Towers.length); }
 });
 
 
@@ -36,7 +36,7 @@ function DisplayTowers(){
 
     for(let i = 0; i < Towers.length; i++){
       Towers[i].draw();
-      if(Towers[i].Pos == TowerPos) {
+      if(Towers[i].Pos === TowerPos) {
         PosTaken = true;
       } else {
         PosTaken = false;
