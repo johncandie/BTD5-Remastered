@@ -24,56 +24,65 @@ function ClickedOnDartMonkey(){
     clickY = e.pageY;
 
     if(clickX >= (row*SquareSize)-(row*6)-15 && clickX <= ((row*SquareSize)-(row*6)-15)+50 && clickY >= 100 && clickY <=150 && Money >= DartMonkeyPrice ){
+    
+      document.body.style.cursor = "none";
+
+    
       DartMonkeyIsClicked = true;
 
       window.addEventListener("mousemove", function(e){
       hoverX = e.pageX;
       hoverY = e.pageY;
-      //hoverX = Math.round((e.pageX / column) * SquareSize);
-      //hoverY = Math.round((e.pageY / row) * SquareSize);
-      //console.log((hoverY / SquareSize) * row + (hoverX / SquareSize))
      });
       window.addEventListener ("click", function(e) {
         
+
+        
         if(DartMonkeyIsClicked === true){
-          DartMonkeyPos = Math.floor((e.pageY + SquareSize * 0.5) / SquareSize) * row + Math.floor((e.pageX + SquareSize * 0.5) / SquareSize);
-          if(e.pageX < (row*SquareSize)-(row*6)-15 && e.pageY < (column*SquareSize)-(3*SquareSize) && MapSelected[DartMonkeyPos] == 1){
+          DartMonkeyPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
+          if(MapSelected[DartMonkeyPos] == 1){
             DartMonkeyIsClicked = false;
             DartMonkeys.push(new DartMonkey(e.pageX-25, e.pageY-25));
             Money -= DartMonkeyPrice;
-            console.log(DartMonkeyPos, MapSelected[DartMonkeyPos]);
+            document.body.style.cursor = "default";
           }
         }
       });
-    }
+  }
   });
 }
 
 window.addEventListener("keydown", function(e){
-  if(e.keyCode == 81){
+  if(e.keyCode == 81 &&  Money >= DartMonkeyPrice ){
+    
+      document.body.style.cursor = "none";
+
     
       DartMonkeyIsClicked = true;
 
       window.addEventListener("mousemove", function(e){
       hoverX = e.pageX;
       hoverY = e.pageY;
-      //hoverX = Math.round((e.pageX / column) * SquareSize);
-      //hoverY = Math.round((e.pageY / row) * SquareSize);
-      //console.log((hoverY / SquareSize) * row + (hoverX / SquareSize))
      });
       window.addEventListener ("click", function(e) {
         
+
+        
         if(DartMonkeyIsClicked === true){
-          DartMonkeyPos = Math.floor((e.pageY + SquareSize * 0.5) / SquareSize) * row + Math.floor((e.pageX + SquareSize * 0.5) / SquareSize);
-          if(e.pageX < (row*SquareSize)-(row*6)-15 && e.pageY < (column*SquareSize)-(3*SquareSize) && MapSelected[DartMonkeyPos] == 1){
+          DartMonkeyPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
+          if(MapSelected[DartMonkeyPos] == 1){
             DartMonkeyIsClicked = false;
             DartMonkeys.push(new DartMonkey(e.pageX-25, e.pageY-25));
             Money -= DartMonkeyPrice;
-            console.log(DartMonkeyPos, MapSelected[DartMonkeyPos]);
+            document.body.style.cursor = "default";
           }
         }
       });
+  }
+  if(e.keyCode == 27) {
+    document.body.style.cursor = "default";
     
+    DartMonkeyIsClicked = false;
   }
 });
 function DartMonkeyDraw(){

@@ -74,8 +74,6 @@ const Bloon = function(Level, x, y) {
  
  
     this.bloonPos = (this.y / SquareSize) * row + (this.x / SquareSize);
-    console.log(this.bloonPos, MapSelected[this.bloonPos]);
-
     const directions = [
       1,  // Right
       row, // Down

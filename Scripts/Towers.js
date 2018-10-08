@@ -8,6 +8,6 @@ window.addEventListener("click", function(e) {
 
 
 function DisplayTowers(){
-  context.drawImage(DartMonkeySrc, (row*SquareSize)-(row*6)-15, 100, 50, 50);
+  context.drawImage(DartMonkeySrc, (row*SquareSize)-(row*6)-15, 100, 60, 60);
     DartMonkeyDraw();
 }

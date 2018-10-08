@@ -29,7 +29,7 @@ if(Difficulty == Medium){
 }
 if(Difficulty == Easy){
   Lifes = Easy.Lifes;
-  Money = Easy.Money;
+  Money = 99999999999999;
 
 }
 function Update(){ //This is for keeping the everything in game at the same size when the screen change.
