@@ -56,7 +56,7 @@ const Bloon = function(Level, x, y) {
     //if(Level == 1)  mask.fillStyle = "#ff0000";
     //if(Level == 2)  mask.fillStyle = "#0000ff";
     //if(Level == 3)  mask.fillStyle = "#00ff00";
-    //if(Level == 4)  mask.fillStyle = "yellow";
+    //if(Level == 4)  mask.fillStyle = "fff700";
     //if(Level == 5)  mask.fillStyle = "deeppink";
     
     
@@ -67,6 +67,8 @@ const Bloon = function(Level, x, y) {
     BloonSrc.src = `./Assets/Sprites/Bloon${Level}.png`;
     
     context.drawImage(BloonSrc, this.x , this.y, 50, 50);
+    
+    BloonSrc = new Image();
 
     context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
