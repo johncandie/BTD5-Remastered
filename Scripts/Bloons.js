@@ -54,20 +54,20 @@ const Bloon = function(Level, x, y) {
   };
 
   this.draw = function(){
-    if(Level == 1)  context.fillStyle = "red";
-    if(Level == 2)  context.fillStyle = "blue";
-    if(Level == 3)  context.fillStyle = "green";
-    if(Level == 4)  context.fillStyle = "yellow";
-    if(Level == 5)  context.fillStyle = "deeppink";
+    if(Level == 1)  mask.fillStyle = "red";
+    if(Level == 2)  mask.fillStyle = "blue";
+    if(Level == 3)  mask.fillStyle = "green";
+    if(Level == 4)  mask.fillStyle = "yellow";
+    if(Level == 5)  mask.fillStyle = "deeppink";
     
     
-    context.drawImage(Bloon0, this.x, this.y, 50, 50);
+    mask.drawImage(Bloon0, this.x, this.y, 50, 50);
 
-    //mask.globalCompositeOperation="source-in";
+    mask.globalCompositeOperation="source-in";
     
-    //context.fillRect(this.x, this.y, 50, 50);
+    mask.fillRect(this.x, this.y, 50, 50);
     
-    //context.drawImage(Bloon1, this.x -2 , this.y -2, 52, 52);
+    context.drawImage(Bloon1, this.x -2 , this.y -2, 52, 52);
   };
 
   this.move = function() {
