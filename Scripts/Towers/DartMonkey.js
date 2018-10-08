@@ -24,7 +24,7 @@ function ClickedOnDartMonkey(){
     if(TowerIsClicked){
       TowerPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
       if(MapSelected[TowerPos] == 1){
-        for(let i = 0; i < Towers.length; i++){if(Towers[i].Pos == TowerPos) {PosTaken = true;}}
+        //for(let i = 0; i < Towers.length; i++){if(Towers[i].Pos == TowerPos) {PosTaken = true;}}
         if(PosTaken === false){
           TowerIsClicked = false;
           Towers.push(new DartMonkey(e.pageX-25, e.pageY-25, TowerPos));
