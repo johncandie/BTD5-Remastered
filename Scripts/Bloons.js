@@ -54,18 +54,18 @@ const Bloon = function(Level, x, y) {
   };
 
   this.draw = function(){
-    if(Level == 1)  mask.fillStyle = "red";
-    if(Level == 2)  mask.fillStyle = "blue";
-    if(Level == 3)  mask.fillStyle = "green";
+    if(Level == 1)  mask.fillStyle = "#ff0000";
+    if(Level == 2)  mask.fillStyle = "#0000ff";
+    if(Level == 3)  mask.fillStyle = "#00ff00";
     if(Level == 4)  mask.fillStyle = "yellow";
     if(Level == 5)  mask.fillStyle = "deeppink";
     
     
     mask.drawImage(Bloon0, this.x, this.y, 50, 50);
-
+    
     mask.globalCompositeOperation="source-in";
     
-    mask.fillRect(this.x, this.y, 50, 50);
+    mask.fillRect(0, 0, width, height);
     
     context.drawImage(Bloon1, this.x -2 , this.y -2, 52, 52);
   };
@@ -127,6 +127,7 @@ onkeydown = onkeyup = function(e){
   if(key[51])Bloons.push(new Bloon(3, 0, -50));
   if(key[52])Bloons.push(new Bloon(4, 0, -50));
   if(key[53])Bloons.push(new Bloon(5, 0, -50));
+  if(key[48])Bloons.splice(0, Bloons.length);
 };
 
 

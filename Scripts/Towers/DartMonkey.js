@@ -6,90 +6,35 @@ const DartMonkey = function(x, y){
   };
   DartMonkeyPrice = 200*Difficulty.Prices;
 };
-var clickX;
-var clickY;
 
-var hoverX;
-var hoverY;
-
-var DartMonkeys = new Array();
-
-var DartMonkeyIsClicked = false;
 
 var DartMonkeyPos;
 
 function ClickedOnDartMonkey(){
-  window.addEventListener("click", function(e) {
-    clickX = e.pageX;
-    clickY = e.pageY;
-
-    if(clickX >= (row*SquareSize)-(row*6)-15 && clickX <= ((row*SquareSize)-(row*6)-15)+50 && clickY >= 100 && clickY <=150 && Money >= DartMonkeyPrice ){
-    
-      document.body.style.cursor = "none";
-
-    
-      DartMonkeyIsClicked = true;
-
-      window.addEventListener("mousemove", function(e){
-      hoverX = e.pageX;
-      hoverY = e.pageY;
-     });
-      window.addEventListener ("click", function(e) {
-        
-
-        
-        if(DartMonkeyIsClicked === true){
-          DartMonkeyPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
-          if(MapSelected[DartMonkeyPos] == 1){
-            DartMonkeyIsClicked = false;
-            DartMonkeys.push(new DartMonkey(e.pageX-25, e.pageY-25));
-            Money -= DartMonkeyPrice;
-            document.body.style.cursor = "default";
-          }
-        }
-      });
-  }
+  //document.body.style.cursor = "none";
+  
+  TowerIsClicked = true;
+  TowerSelected = DartMonkeySrc;
+  
+  window.addEventListener("mousemove", function(e){
+    hoverX = e.pageX;
+    hoverY = e.pageY;
+  //  console.log(hoverX, hoverY);
+  });
+  
+  window.addEventListener ("click", function(e) {
+    if(TowerIsClicked === true){
+      DartMonkeyPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
+      if(MapSelected[DartMonkeyPos] == 1){
+        //{
+          TowerIsClicked = false;
+          Towers.push(new DartMonkey(e.pageX-25, e.pageY-25));
+          Money -= DartMonkeyPrice;
+          document.body.style.cursor = "default";
+        //}
+      }
+    }
   });
 }
 
-window.addEventListener("keydown", function(e){
-  if(e.keyCode == 81 &&  Money >= DartMonkeyPrice ){
-    
-      document.body.style.cursor = "none";
 
-    
-      DartMonkeyIsClicked = true;
-
-      window.addEventListener("mousemove", function(e){
-      hoverX = e.pageX;
-      hoverY = e.pageY;
-     });
-      window.addEventListener ("click", function(e) {
-        
-
-        
-        if(DartMonkeyIsClicked === true){
-          DartMonkeyPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
-          if(MapSelected[DartMonkeyPos] == 1){
-            DartMonkeyIsClicked = false;
-            DartMonkeys.push(new DartMonkey(e.pageX-25, e.pageY-25));
-            Money -= DartMonkeyPrice;
-            document.body.style.cursor = "default";
-          }
-        }
-      });
-  }
-  if(e.keyCode == 27) {
-    document.body.style.cursor = "default";
-    
-    DartMonkeyIsClicked = false;
-  }
-});
-function DartMonkeyDraw(){
-  if(DartMonkeyIsClicked === true) {
-    context.drawImage(DartMonkeySrc, hoverX - 25, hoverY - 25, 50, 50);
-  }
-  for(let i = 0; i < DartMonkeys.length; i++){
-    DartMonkeys[i].draw();
-  }
-}
