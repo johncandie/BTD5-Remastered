@@ -7,8 +7,6 @@ const Bloon = function(Level, x, y) {
 
   this.Level = Level;
 
-  this.positions = [-1];
-  
   this.x = x;
   this.y = y;
 
@@ -41,18 +39,18 @@ const Bloon = function(Level, x, y) {
       let left  = 0;
       let up    = 0;
       
-      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0){
-        right = SquareSize;
-      } else right = 0;
-      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)-1] === 0){
-        left = SquareSize;
-      } else left = 0;
-      if(MapSelected[(Math.floor(this.y/50))+1][Math.floor(this.x/50) === 0]){
-        up = SquareSize;
-      } else up = 0;
-      if(MapSelected[Math.floor(this.y/50)-1][Math.floor(this.x/50)] === 0){
-        down = SquareSize;
+      if(MapSelected[Math.floor(this.y/50)+1][Math.floor(this.x/50)] === 0 && up === 0){
+        down = this.speed;
       } else down = 0;
+      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0 && left === 0){
+        right = this.speed;
+      } else right = 0;
+      if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && down === 0){
+        up = this.speed;
+      } else up = 0;
+      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)-1] === 0 && right === 0){
+        left = this.speed;
+      } else left = 0;
       
       this.x -= left;
       this.y -= up;

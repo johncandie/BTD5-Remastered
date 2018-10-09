@@ -61,8 +61,8 @@ function Update(){ //This is for keeping the everything in game at the same size
   context.font = "50px Comic Sans MS";
  
   context.fillStyle = "red";
-  context.fillText(`${Lifes}`, ((row*SquareSize)-(row*6))-15, 50);
+  context.fillText(`${Lifes}`, 0, 38);
  
   context.fillStyle = "gold";
-  context.fillText(`${Money}`, ((row*SquareSize)-(row*6))+83, 50);
+  context.fillText(`${Money}`, 100, 38);
 }
