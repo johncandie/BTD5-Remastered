@@ -3,12 +3,12 @@ var Bloon0 = new Image();
   Bloon0.src = "./Assets/Sprites/Bloon.png";
 var BloonSrc = new Image();
 
-
 const Bloon = function(Level, x, y) {
 
   this.Level = Level;
 
-
+  this.positions = [-1];
+  
   this.x = x;
   this.y = y;
 
@@ -33,41 +33,31 @@ const Bloon = function(Level, x, y) {
 
     context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
-
+  
   this.move = function(){
     
-    this.lastDir = 0;
-    
-    var down = 1;
-    var right = 1;
-    var up = 1;
-    var left = 1;
-    
-    if(MapSelected[(Math.floor(this.y/50))+1][Math.floor(this.x/50)] === 0 && this.lastDir !== up){ //check if it can go down
-      this.y += this.speed; //make it go down
-      this.lastDir = down; //make sure it cant go up if it just went down
-      console.log("going down");
-    }
-    if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0 && this.LastDir !== left){   //check if can go right
-      this.x += this.speed;
-      this.lastDir = right;
-      console.log("going right");
-
-    }
+      let right = 0;
+      let down  = 0;
+      let left  = 0;
+      let up    = 0;
       
-
-    //if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)]){
-      if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && this.lastDir !== down){
-      this.y -= this.speed;
-      this.lastDir = up;
-      console.log("going up");
-      }
-    //
-    //}
-    //console.log(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && this.lastDir == right);
-    //if(MapSelected[(Math.floor(this.y/50))+1][Math.floor(this.x/50)] === 0) this.y += 50;
-  
-    
+      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0){
+        right = SquareSize;
+      } else right = 0;
+      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)-1] === 0){
+        left = SquareSize;
+      } else left = 0;
+      if(MapSelected[(Math.floor(this.y/50))+1][Math.floor(this.x/50) === 0]){
+        up = SquareSize;
+      } else up = 0;
+      if(MapSelected[Math.floor(this.y/50)-1][Math.floor(this.x/50)] === 0){
+        down = SquareSize;
+      } else down = 0;
+      
+      this.x -= left;
+      this.y -= up;
+      this.x += right;
+      this.y += down;
   };
 };
 
@@ -81,14 +71,13 @@ var key = [];
 onkeydown = onkeyup = function(e){
   e = e || event;
   key[e.keyCode] = e.type == 'keydown';
-  if(key[49])Bloons.push(new Bloon(1, 0, 0));
+  if(key[49])Bloons.push(new Bloon(1, 0, 50));
   if(key[50])Bloons.push(new Bloon(2, 0, 0));
   if(key[51])Bloons.push(new Bloon(3, 0, 0));
   if(key[52])Bloons.push(new Bloon(4, 0, 0));
   if(key[53])Bloons.push(new Bloon(5, 0, 0));
   if(key[48])Bloons.splice(0, Bloons.length);
 };
-
 
 
 function CheckBloons(){
