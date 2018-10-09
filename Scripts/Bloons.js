@@ -2,6 +2,8 @@
 var Bloon0 = new Image();
   Bloon0.src = "./Assets/Sprites/Bloon.png";
 var BloonSrc = new Image();
+    
+var lastPos = -1;
 
 const Bloon = function(Level, x, y) {
 
@@ -39,17 +41,26 @@ const Bloon = function(Level, x, y) {
       let left  = 0;
       let up    = 0;
       
-      if(MapSelected[Math.floor(this.y/50)+1][Math.floor(this.x/50)] === 0 && up === 0){
+      // 0 = down
+      //1 = right
+      //2 = up
+      //3 = left
+      
+      if(MapSelected[Math.floor(this.y/50)+1][Math.floor(this.x/50)] === 0 && lastPos !== 2){
         down = this.speed;
+        lastPos = 0;
       } else down = 0;
-      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0 && left === 0){
+      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0 && lastPos !== 3){
         right = this.speed;
+        lastPos = 1;
       } else right = 0;
-      if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && down === 0){
+      if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && lastPos !== 0){
         up = this.speed;
+        lastPos = 2;
       } else up = 0;
-      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)-1] === 0 && right === 0){
+      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)-1] === 0 && lastPos !== 1){
         left = this.speed;
+        lastPos = 3;
       } else left = 0;
       
       this.x -= left;
