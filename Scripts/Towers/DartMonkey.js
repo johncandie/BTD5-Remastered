@@ -1,6 +1,6 @@
 var DartMonkeyPrice = 200;
-const DartMonkey = function(x, y, Pos){
-  this.x = x; this.y = y; this.Pos = Pos;
+const DartMonkey = function(x, y){
+  this.x = x; this.y = y;
   this.draw = function(){
       context.drawImage(DartMonkeySrc, x, y, 50, 50);
   };
@@ -22,18 +22,13 @@ function ClickedOnDartMonkey(){
   
   window.addEventListener ("click", function(e) {
     if(TowerIsClicked){
-      TowerPos = Math.floor(e.pageY / SquareSize) * row + Math.floor(e.pageX / SquareSize);
-      if(MapSelected[TowerPos] == 1){
-        //for(let i = 0; i < Towers.length; i++){if(Towers[i].Pos == TowerPos) {PosTaken = true;}}
-        if(PosTaken === false){
+      if(MapSelectedPlace[Math.floor(e.pageY/50)][Math.floor(e.pageX/50)] == 1){
+        MapSelectedPlace[Math.floor(e.pageY/50)][Math.floor(e.pageX/50)] = 0;
           TowerIsClicked = false;
-          Towers.push(new DartMonkey(e.pageX-25, e.pageY-25, TowerPos));
+          Towers.push(new DartMonkey(e.pageX-25, e.pageY-25));
           Money -= DartMonkeyPrice;
           document.body.style.cursor = "default";
-        }
       }
     }
   });
 }
-
-

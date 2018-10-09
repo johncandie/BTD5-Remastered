@@ -14,9 +14,6 @@ var clickY;
 var hoverX;
 var hoverY;
 
-var TowerPos;
-
-var PosTaken = false;
 
 window.addEventListener("click", function(e) {
   clickX = e.pageX;
@@ -26,7 +23,6 @@ window.addEventListener("click", function(e) {
 window.addEventListener("keydown", function(e){
   if(e.keyCode === 81 &&  Money >= DartMonkeyPrice) {ClickedOnDartMonkey()}
   if(e.keyCode === 27){document.body.style.cursor = "default";TowerIsClicked = false;}
-  //if(e.keyCode === 8){Towers.splice(0, Towers.length); }
 });
 
 
@@ -36,14 +32,9 @@ function DisplayTowers(){
 
     for(let i = 0; i < Towers.length; i++){
       Towers[i].draw();
-      if(Towers[i].Pos == TowerPos) {
-        PosTaken = true;
-      } else {
-        PosTaken = false;
-      }
     }
     
-  if(TowerIsClicked === true) {
+  if(TowerIsClicked) {
     context.drawImage(TowerSelected, hoverX - 25, hoverY - 25, 50, 50);
   }
 }

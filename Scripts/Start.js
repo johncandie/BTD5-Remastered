@@ -11,6 +11,14 @@ var height = document.documentElement.clientHeight;
 
 var MapSelected = Map1;
 
+var MapSelectedPlace;
+
+//if(MapSelected == Map1) MapSelectedPlace = Map1Place;
+
+switch (MapSelected){
+  case Map1:  MapSelectedPlace = Map1Place;
+}
+
 let frame = 0;
 
 var Lifes;
@@ -18,20 +26,12 @@ var Lifes;
 var Money;
 
 Difficulty = Easy;
+switch(Difficulty){
+  case Hard:   Lifes = Hard.Lifes; Money = Hard.Money; break;
+  case Medium:   Lifes = Medium.Lifes; Money = Medium.Money; break;
+  case Easy:   Lifes = Easy.Lifes; Money = Easy.Money; break;
+}
 
-if(Difficulty == Hard) {
-  Lifes = Hard.Lifes;
-  Money = Hard.Money;
-}
-if(Difficulty == Medium){
-  Lifes = Medium.Lifes;
-  Money = Medium.Money;
-}
-if(Difficulty == Easy){
-  Lifes = Easy.Lifes;
-  Money = 99999999999999;
-
-}
 function Update(){ //This is for keeping the everything in game at the same size when the screen change.
 
   width = document.documentElement.clientWidth;

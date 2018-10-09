@@ -17,9 +17,9 @@ var SquareSize =  50;
 var Draw = Grass;
 
 function DrawMap() {
-   for (let y = 0; y < column; y++) {
-     for (let x = 0; x < row; x++) {
-        switch (MapSelected[((y * row) + x)]) {
+   for (let y = 0; y < (MapSelected.length); y++) {
+     for (let x = 0; x <= MapSelected[y].length; x++) {
+        switch (MapSelected[y][x]) {
           case 0: context.fillStyle = "white";
                   Draw = Stone;
             break;
@@ -36,10 +36,12 @@ function DrawMap() {
           case 4: context.fillStyle = "yellow";
             Draw = Wood;
             break;
-          
+
         }
-        context.drawImage(Draw,x*SquareSize, y*SquareSize, SquareSize, SquareSize);
         //context.fillRect(x*SquareSize, y*SquareSize, SquareSize, SquareSize);
+        context.drawImage(Draw,x*SquareSize, y*SquareSize, SquareSize, SquareSize);
+
      }
    }
 }
+

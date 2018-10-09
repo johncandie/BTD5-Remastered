@@ -7,63 +7,24 @@ var BloonSrc = new Image();
 const Bloon = function(Level, x, y) {
 
   this.Level = Level;
-  this.positions = [-1]; // -1 'cuz initially there's no old position
 
-  this.keyframe = 1;
-  this.keyframes = [
-    // [FRAME, X, Y]
-    [0, x, y],
-  ];
 
   this.x = x;
   this.y = y;
 
-  this.animate = function(frame) {
-    if (this.keyframe !== this.keyframes.length) {
-      const cur = this.keyframes[this.keyframe - 1];
-      const next = this.keyframes[this.keyframe];
-
-      if (next[0] <= frame) {
-        this.keyframe++;
-        this.x = next[1];
-        this.y = next[2];
-      } else {
-        const frames = next[0] - cur[0];
-        const curFrame = next[0] - frame;
-
-        this.x = cur[1] + (next[1] - cur[1]) * (1 - (curFrame / frames));
-        this.y = cur[2] + (next[2] - cur[2]) * (1 - (curFrame / frames));
-      }
-    }
-
-    var dur; // basically the speed. It checks something for animation
+  this.speed;
     
-    if(Level == 1) dur = 24;
-    if(Level == 2) dur = 20;
-    if(Level == 3) dur = 18;
-    if(Level == 4) dur = 12;
-    if(Level == 5) dur = 10;
-  
-    if (!(frame % dur)) {
-      const [x, y] = this.move();
-      this.keyframes.push([
-        frame + dur, x, y,
-      ]);
+    switch(Level){
+      case 5: this.speed = 2.4; break;
+      case 4: this.speed = 2.0; break;
+      case 3: this.speed = 1.8; break;
+      case 2: this.speed = 1.2; break;
+      case 1: this.speed = 1.0; break;
     }
-  };
+
 
   this.draw = function(){
-    //if(Level == 1)  mask.fillStyle = "#ff0000";
-    //if(Level == 2)  mask.fillStyle = "#0000ff";
-    //if(Level == 3)  mask.fillStyle = "#00ff00";
-    //if(Level == 4)  mask.fillStyle = "fff700";
-    //if(Level == 5)  mask.fillStyle = "deeppink";
-    
-    
-    //
-    //mask.globalCompositeOperation="source-in";
-    //
-    //mask.fillRect(0, 0, width, height);
+
     BloonSrc.src = `./Assets/Sprites/Bloon${Level}.png`;
     
     context.drawImage(BloonSrc, this.x , this.y, 50, 50);
@@ -73,45 +34,40 @@ const Bloon = function(Level, x, y) {
     context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
 
-  this.move = function() {
- 
- 
-    this.bloonPos = (this.y / SquareSize) * row + (this.x / SquareSize);
-    const directions = [
-      1,  // Right
-      row, // Down
-      -1, // Left
-      -row // Up
-    ];
-
-    // Reset new directions
-    let right = 0;
-    let down  = 0;
-    let left  = 0;
-    let up    = 0;
-
-    for (const dir of directions) {
-      const newPos = this.bloonPos + dir;
-      const lastPos = this.positions[this.positions.length - 1];
-
-      if (newPos !== lastPos && MapSelected[newPos] === 0) {
-        this.positions.push(this.bloonPos);
-
-        switch (dir) {
-          case 1:   right = SquareSize; break;
-          case row:  down = SquareSize; break;
-          case -1:  left = SquareSize; break;
-          case -row: up = SquareSize; break;
-        }
-
-        break;
-      }
+  this.move = function(){
+    
+    this.lastDir = 0;
+    
+    var down = 1;
+    var right = 1;
+    var up = 1;
+    var left = 1;
+    
+    if(MapSelected[(Math.floor(this.y/50))+1][Math.floor(this.x/50)] === 0 && this.lastDir !== up){ //check if it can go down
+      this.y += this.speed; //make it go down
+      this.lastDir = down; //make sure it cant go up if it just went down
+      console.log("going down");
     }
+    if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0 && this.LastDir !== left){   //check if can go right
+      this.x += this.speed;
+      this.lastDir = right;
+      console.log("going right");
 
-    const x = this.x - left + right;
-    const y = this.y - up + down;
+    }
+      
 
-    return [x, y];
+    //if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)]){
+      if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && this.lastDir !== down){
+      this.y -= this.speed;
+      this.lastDir = up;
+      console.log("going up");
+      }
+    //
+    //}
+    //console.log(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && this.lastDir == right);
+    //if(MapSelected[(Math.floor(this.y/50))+1][Math.floor(this.x/50)] === 0) this.y += 50;
+  
+    
   };
 };
 
@@ -125,11 +81,11 @@ var key = [];
 onkeydown = onkeyup = function(e){
   e = e || event;
   key[e.keyCode] = e.type == 'keydown';
-  if(key[49])Bloons.push(new Bloon(1, 0, -50));
-  if(key[50])Bloons.push(new Bloon(2, 0, -50));
-  if(key[51])Bloons.push(new Bloon(3, 0, -50));
-  if(key[52])Bloons.push(new Bloon(4, 0, -50));
-  if(key[53])Bloons.push(new Bloon(5, 0, -50));
+  if(key[49])Bloons.push(new Bloon(1, 0, 0));
+  if(key[50])Bloons.push(new Bloon(2, 0, 0));
+  if(key[51])Bloons.push(new Bloon(3, 0, 0));
+  if(key[52])Bloons.push(new Bloon(4, 0, 0));
+  if(key[53])Bloons.push(new Bloon(5, 0, 0));
   if(key[48])Bloons.splice(0, Bloons.length);
 };
 
@@ -139,7 +95,7 @@ function CheckBloons(){
     for (let i = 0; i < Bloons.length; i++){
     Bloons[i].draw();
 
-    Bloons[i].animate(frame);
+    Bloons[i].move();
     
     if(MapSelected == Map1 && Bloons[i].x == 200 && Bloons[i].y == 700){
        Lifes -= Bloons[i].Level;
