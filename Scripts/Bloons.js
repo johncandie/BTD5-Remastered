@@ -3,9 +3,6 @@ var Bloon0 = new Image();
   Bloon0.src = "./Assets/Sprites/Bloon.png";
 var BloonSrc = new Image();
     
-var LastVert = 0;
-var LastHori = 0;
-
 
 const Bloon = function(Level, x, y) {
 
@@ -15,6 +12,8 @@ const Bloon = function(Level, x, y) {
   this.y = y;
 
   this.speed;
+  
+  this.positions = [[-1, -1]];
     
     switch(Level){
       case 5: this.speed = 2.4; break;
@@ -36,6 +35,7 @@ const Bloon = function(Level, x, y) {
     context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
   
+
   this.move = function(){
     
       let right = 0;
@@ -43,29 +43,41 @@ const Bloon = function(Level, x, y) {
       let left  = 0;
       let up    = 0;
       
+      var DownPos = MapSelected[Math.floor(this.y/SquareSize)+1][Math.floor(this.x/50)];
+      var RightPos = MapSelected[Math.floor(this.y/SquareSize)][Math.floor(this.x/50)+1];
+      var UpPos = MapSelected[Math.floor(this.y/SquareSize)-1][Math.floor(this.x/50)];
+      var LeftPos = MapSelected[Math.floor(this.y/SquareSize)][Math.floor(this.x/50)-1];
       
-      console.log(LastVert, LastHori);
-      if(MapSelected[Math.floor(this.y/50)+1][Math.floor(this.x/50)] === 0 && LastVert != -1){
-        down = this.speed;
-        LastVert = 1;
-      } else down = 0;
-      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)+1] === 0 && LastHori != -1){
-        right = this.speed;
-        LastHori = 1;
-      } else right = 0;
-      if(MapSelected[(Math.floor(this.y/50))-1][Math.floor(this.x/50)] === 0 && LastVert != 1){
-        up = this.speed;
-        LastVert = -1;
-      } else up = 0;
-      if(MapSelected[(Math.floor(this.y/50))][Math.floor(this.x/50)-1] === 0 && LastHori != 1){
-        left = this.speed;
-        LastHori = -1;
-      } else left = 0;
+      const lastPos = this.positions[this.positions.length - 1];
       
+      var x = MapSelected[Math.floor(this.y)/SquareSize][Math.floor(this.x)/SquareSize];
+      var y = MapSelected[Math.floor(this.y)/SquareSize][Math.floor(this.x)/SquareSize];
+      
+      if(DownPos === 0 && x !== lastPos[0] && y !== lastPos[1]){
+        down = SquareSize;
+        this.positions.push([x, y]);
+      }
+      
+      if(RightPos === 0 && x !== lastPos[0] && y !== lastPos[1]){
+        right = SquareSize;
+        this.positions.push([x, y]);
+      }
+        
+      //if(UpPos === 0){
+      //  up = this.speed;
+      //} else {up = 0;}
+      //if(LeftPos === 0){
+      //  left = this.speed;
+      //} else {left = 0}
+      
+      console.log(`down ${DownPos} right ${RightPos} up ${UpPos} left ${LeftPos}`);
+
       this.x -= left;
       this.y -= up;
       this.x += right;
       this.y += down;
+      
+    
   };
 };
 
@@ -80,10 +92,10 @@ onkeydown = onkeyup = function(e){
   e = e || event;
   key[e.keyCode] = e.type == 'keydown';
   if(key[49])Bloons.push(new Bloon(1, 0, 50));
-  if(key[50])Bloons.push(new Bloon(2, 0, 0));
-  if(key[51])Bloons.push(new Bloon(3, 0, 0));
-  if(key[52])Bloons.push(new Bloon(4, 0, 0));
-  if(key[53])Bloons.push(new Bloon(5, 0, 0));
+  if(key[50])Bloons.push(new Bloon(2, 0, 50));
+  if(key[51])Bloons.push(new Bloon(3, 0, 50));
+  if(key[52])Bloons.push(new Bloon(4, 0, 50));
+  if(key[53])Bloons.push(new Bloon(5, 0, 50));
   if(key[48])Bloons.splice(0, Bloons.length);
 };
 

@@ -3,7 +3,7 @@ const context = document.querySelector("#canvas").getContext("2d");
 
 
 function Start() {
-  var start = setInterval(Update, 1000/60);
+  var start = setInterval(Update, 1000/50);
 }
 
 var width = document.documentElement.clientWidth;
@@ -65,4 +65,6 @@ function Update(){ //This is for keeping the everything in game at the same size
  
   context.fillStyle = "gold";
   context.fillText(`${Money}`, 100, 38);
+  //context.fillText(`${Bloons.length}`, 200, 200);
+  
 }
