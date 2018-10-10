@@ -37,37 +37,30 @@ const Bloon = function(Level, x, y) {
   
 
   this.move = function(){
-    
-      let right = 0;
-      let down  = 0;
-      let left  = 0;
-      let up    = 0;
-      
-      var DownPos = MapSelected[Math.floor(this.y/SquareSize)+1][Math.floor(this.x/50)];
-      var RightPos = MapSelected[Math.floor(this.y/SquareSize)][Math.floor(this.x/50)+1];
-      var UpPos = MapSelected[Math.floor(this.y/SquareSize)-1][Math.floor(this.x/50)];
-      var LeftPos = MapSelected[Math.floor(this.y/SquareSize)][Math.floor(this.x/50)-1];
-      
       const lastPos = this.positions[this.positions.length - 1];
+      const curPos = [this.x, this.y];
       
-      var x = this.x;
-      var y = this.y;
-      
-      if(DownPos === 0 && (x !== lastPos[0] || y !== lastPos[1])){
-        down = SquareSize;
-        this.positions.push([x, y]);
+      function samePos(pos1, pos2) {
+        return pos1[0] === pos2[0] && pos1[1] === pos2[1];
       }
       
-      if(RightPos === 0 && (x !== lastPos[0] || y !== lastPos[1])){
-        right = SquareSize;
-        this.positions.push([x, y]);
+      let newPos;
+      const newPoses = [
+        [curPos[0], curPos[1] + SquareSize], // Down
+        [curPos[0] + SquareSize, curPos[1]], // Right
+        [curPos[0], curPos[1] - SquareSize], // Up
+        [curPos[0] - SquareSize, curPos[1]], // Left
+      ];
+
+      for (const pos of newPoses) {
+        const cell = (MapSelected[pos[1] / SquareSize] || {})[pos[0] / SquareSize];
+
+        if (cell === 0 && !samePos(pos, lastPos)) {
+          newPos = pos;
+          this.positions.push(curPos);
+        }
       }
-      if(UpPos === 0 && (x !== lastPos[0] || y !== lastPos[1])){
-        up = SquareSize;
-        this.positions.push([x, y]);
-      }
-      
-        
+
       //if(UpPos === 0){
       //  up = this.speed;
       //} else {up = 0;}
@@ -75,14 +68,18 @@ const Bloon = function(Level, x, y) {
       //  left = this.speed;
       //} else {left = 0}
       
-      console.log(`down ${DownPos} right ${RightPos} up ${UpPos} left ${LeftPos}`);
+      // I commented this out because I didn't need the vars it depends on
+      // console.log(`down ${DownPos} right ${RightPos} up ${UpPos} left ${LeftPos}`);
 
-      this.x -= left;
-      this.y -= up;
-      this.x += right;
-      this.y += down;
+      // this.x -= left;
+      // this.y -= up;
+      // this.x += right;
+      // this.y += down;
       
-    
+      if (newPos) {
+        this.x = newPos[0];
+        this.y = newPos[1];
+      }
   };
 };
 
