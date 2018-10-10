@@ -34,7 +34,7 @@ const Bloon = function(Level, x, y) {
 
     context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
-  
+
 
   this.move = function(){
     
@@ -50,15 +50,15 @@ const Bloon = function(Level, x, y) {
       
       const lastPos = this.positions[this.positions.length - 1];
       
-      var x = MapSelected[Math.floor(this.y)/SquareSize][Math.floor(this.x)/SquareSize];
-      var y = MapSelected[Math.floor(this.y)/SquareSize][Math.floor(this.x)/SquareSize];
+      var x = this.x; 
+      var y = this.y; 
       
-      if(DownPos === 0 && x !== lastPos[0] && y !== lastPos[1]){
+      if(DownPos === 0 && (x !== lastPos[0] || y !== lastPos[1])){
         down = SquareSize;
         this.positions.push([x, y]);
       }
       
-      if(RightPos === 0 && x !== lastPos[0] && y !== lastPos[1]){
+      if(RightPos === 0 && (x !== lastPos[0] || y !== lastPos[1])){
         right = SquareSize;
         this.positions.push([x, y]);
       }
