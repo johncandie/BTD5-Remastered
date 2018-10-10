@@ -1,9 +1,7 @@
 const context = document.querySelector("#canvas").getContext("2d");
-//const mask = document.querySelector("#mask").getContext("2d");
-
 
 function Start() {
-  var start = setInterval(Update, 1000/50);
+  var start = setInterval(Update, 1000/60);
 }
 
 var width = document.documentElement.clientWidth;
@@ -12,8 +10,6 @@ var height = document.documentElement.clientHeight;
 var MapSelected = Map1;
 
 var MapSelectedPlace;
-
-//if(MapSelected == Map1) MapSelectedPlace = Map1Place;
 
 switch (MapSelected){
   case Map1:  MapSelectedPlace = Map1Place;
@@ -39,14 +35,8 @@ function Update(){ //This is for keeping the everything in game at the same size
 
   context.canvas.width = width;
   context.canvas.height = height;
-  
-  //mask.canvas.width = width;
-  //mask.canvas.height = height;
  
   DrawMap();
-
-  //bloon.animate(frame);
-  //bloon.draw();
     
   if(Lifes <= 0) {
     clearInterval(start);

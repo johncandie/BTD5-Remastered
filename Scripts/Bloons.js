@@ -14,6 +14,11 @@ const Bloon = function(Level, x, y) {
   this.speed;
   
   this.positions = [[-1, -1]];
+    this.keyframe = 1;
+    this.keyframes = [
+      // [FRAME, X, Y]
+      [0, x, y],
+    ];
     
     switch(Level){
       case 5: this.speed = 2.4; break;
@@ -22,6 +27,34 @@ const Bloon = function(Level, x, y) {
       case 2: this.speed = 1.2; break;
       case 1: this.speed = 1.0; break;
     }
+    
+  this.animate = function(frame) {
+  if (this.keyframe !== this.keyframes.length) {
+    const cur = this.keyframes[this.keyframe - 1];
+    const next = this.keyframes[this.keyframe];
+    
+    if (next[0] <= frame) {
+      this.keyframe++;
+      this.x = next[1];
+      this.y = next[2];
+    } else {
+      const frames = next[0] - cur[0];
+      const curFrame = next[0] - frame;
+      
+      this.x = cur[1] + (next[1] - cur[1]) * (1 - (curFrame / frames));
+      this.y = cur[2] + (next[2] - cur[2]) * (1 - (curFrame / frames));
+    }
+  }
+  
+  const dur = 12;
+  if (!(frame % dur)) {
+    const [x, y] = this.move();
+      this.keyframes.push([
+        frame + dur, x, y,
+      ]);
+    }
+  };
+
 
 
   this.draw = function(){
@@ -61,29 +94,15 @@ const Bloon = function(Level, x, y) {
         }
       }
 
-      //if(UpPos === 0){
-      //  up = this.speed;
-      //} else {up = 0;}
-      //if(LeftPos === 0){
-      //  left = this.speed;
-      //} else {left = 0}
-      
-      // I commented this out because I didn't need the vars it depends on
-      // console.log(`down ${DownPos} right ${RightPos} up ${UpPos} left ${LeftPos}`);
-
-      // this.x -= left;
-      // this.y -= up;
-      // this.x += right;
-      // this.y += down;
-      
       if (newPos) {
         this.x = newPos[0];
         this.y = newPos[1];
+        return [x, y];
+
       }
   };
 };
 
-//var bloon = new Bloon(3, 0, -50);
 
 var Bloons = new Array();
 
@@ -106,8 +125,7 @@ function CheckBloons(){
     for (let i = 0; i < Bloons.length; i++){
     Bloons[i].draw();
 
-    Bloons[i].move();
-    
+    Bloons[i].animate(frame);
     if(MapSelected == Map1 && Bloons[i].x == 200 && Bloons[i].y == 700){
        Lifes -= Bloons[i].Level;
        Bloons.splice(i,1);
