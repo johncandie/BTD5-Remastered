@@ -1,7 +1,7 @@
 const context = document.querySelector("#canvas").getContext("2d");
-
+var start;
 function Start() {
-  var start = setInterval(Update, 1000/60);
+  start = setInterval(Update, 1000/60);
 }
 
 var width = document.documentElement.clientWidth;
@@ -9,11 +9,6 @@ var height = document.documentElement.clientHeight;
 
 var MapSelected = Map1;
 
-var MapSelectedPlace;
-
-switch (MapSelected){
-  case Map1:  MapSelectedPlace = Map1Place;
-}
 
 let frame = 0;
 
@@ -29,6 +24,7 @@ switch(Difficulty){
 }
 
 function Update(){ //This is for keeping the everything in game at the same size when the screen change.
+  frame++;
 
   width = document.documentElement.clientWidth;
   height = document.documentElement.clientHeight;
@@ -42,11 +38,6 @@ function Update(){ //This is for keeping the everything in game at the same size
     clearInterval(start);
   }
   
-  frame++;
-  
-  CheckBloons();
-  
-  DisplayTowers();
   
   context.font = "50px Comic Sans MS";
  
@@ -55,6 +46,12 @@ function Update(){ //This is for keeping the everything in game at the same size
  
   context.fillStyle = "gold";
   context.fillText(`${Money}`, 100, 38);
-  //context.fillText(`${Bloons.length}`, 200, 200);
   
+  context.fillText(`${Bloons.length}`, 0, 100);
+  
+  CheckBloons();
+  
+  DisplayTowers();
+  
+
 }
