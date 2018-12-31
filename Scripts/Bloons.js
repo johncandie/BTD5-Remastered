@@ -1,12 +1,11 @@
-
 var Bloon0 = new Image();
-  Bloon0.src = "./Assets/Sprites/Bloon.png";
+Bloon0.src = "./Assets/Sprites/Bloon.png";
 var BloonSrc = new Image();
-    
 
-const Bloon = function(Level, x, y) {
 
-  this.Level = Level;
+const Bloon = function(level, x, y) {
+
+  this.level = level;
 
   this.x = x;
   this.y = y;
@@ -16,11 +15,12 @@ const Bloon = function(Level, x, y) {
   this.positions = [[-1, -1]];
     this.keyframe = 1;
     this.keyframes = [
-      // [FRAME, X, Y]
       [0, x, y],
     ];
+        
     
-    switch(Level){
+  this.animate = function(frame) {
+    switch(level){
       case 5: this.speed = 2.4; break;
       case 4: this.speed = 2.0; break;
       case 3: this.speed = 1.8; break;
@@ -28,7 +28,6 @@ const Bloon = function(Level, x, y) {
       case 1: this.speed = 1.0; break;
     }
     
-  this.animate = function(frame) {
   if (this.keyframe !== this.keyframes.length) {
     const cur = this.keyframes[this.keyframe - 1];
     const next = this.keyframes[this.keyframe];
@@ -53,21 +52,18 @@ const Bloon = function(Level, x, y) {
         frame + dur, x, y,
       ]);
     }
-  };
-
-
-
-  this.draw = function(){
-
-    BloonSrc.src = `./Assets/Sprites/Bloon${Level}.png`;
+    if(this.y >= 50){
+      BloonSrc.src = `./Assets/Sprites/Bloon${this.level}.png`;
+      
+      context.drawImage(BloonSrc, this.x + 5 , this.y + 5, 40, 40);
+      
+      BloonSrc = new Image();
+      
+      context.drawImage(Bloon0, this.x + 5, this.y + 5, 40, 40);
+      
+    }
     
-    context.drawImage(BloonSrc, this.x , this.y, 50, 50);
-    
-    BloonSrc = new Image();
-
-    context.drawImage(Bloon0, this.x, this.y, 50, 50);
   };
-  
 
   this.move = function(){
       const lastPos = this.positions[this.positions.length - 1];
@@ -93,43 +89,36 @@ const Bloon = function(Level, x, y) {
           this.positions.push(curPos);
         }
       }
-
-      if (newPos) {
-        this.x = newPos[0];
-        this.y = newPos[1];
-        return [x, y];
-
-      }
+        return [newPos[0], newPos[1]];
   };
 };
-
 
 var Bloons = new Array();
 
 
+
+
+function CheckBloons() {
+    for (let i = 0; i < Bloons.length; i++) {
+
+        Bloons[i].animate(frame);
+        if(Bloons[i].level <= 0) Bloons.splice(i, 1);
+        if (MapSelected == Map1 && Bloons[i].x == 200 && Bloons[i].y == 700) {
+            Lifes -= Bloons[i].level;
+            Bloons.splice(i, 1);
+
+        }
+    }
+}
 var key = [];
 
-onkeydown = onkeyup = function(e){
-  e = e || event;
-  key[e.keyCode] = e.type == 'keydown';
-  if(key[49])Bloons.push(new Bloon(1, 0, 50));
-  if(key[50])Bloons.push(new Bloon(2, 0, 50));
-  if(key[51])Bloons.push(new Bloon(3, 0, 50));
-  if(key[52])Bloons.push(new Bloon(4, 0, 50));
-  if(key[53])Bloons.push(new Bloon(5, 0, 50));
-  if(key[48])Bloons.splice(0, Bloons.length);
+onkeydown = onkeyup = function(e) {
+    e = e || event;
+    key[e.keyCode] = e.type == 'keydown';
+    if (key[49]) Bloons.push(new Bloon(1, 0, 0));
+    if (key[50]) Bloons.push(new Bloon(2, 0, 0));
+    if (key[51]) Bloons.push(new Bloon(3, 0, 0));
+    if (key[52]) Bloons.push(new Bloon(4, 0, 0));
+    if (key[53]) Bloons.push(new Bloon(5, 0, 0));
+    if (key[48]) Bloons.splice(0, Bloons.length);
 };
-
-
-function CheckBloons(){
-    for (let i = 0; i < Bloons.length; i++){
-    Bloons[i].draw();
-
-    Bloons[i].animate(frame);
-    if(MapSelected == Map1 && Bloons[i].x == 200 && Bloons[i].y == 700){
-       Lifes -= Bloons[i].Level;
-       Bloons.splice(i,1);
-      
-    }
-  }
-}
