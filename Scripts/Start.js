@@ -2,8 +2,9 @@ const context = document.querySelector("#canvas").getContext("2d");
 var start;
 function Start() {
   start = setInterval(Update, 1000/60);
-}
+      console.log("hi");
 
+}
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
 
@@ -39,13 +40,13 @@ function Update(){ //This is for keeping the everything in game at the same size
   }
   
   
-  context.font = "50px Comic Sans MS";
+  context.font = "40px Comic Sans MS";
  
   context.fillStyle = "red";
-  context.fillText(`${Lifes}`, 0, 38);
+  context.fillText(`${Lifes}`, 1200, 88);
  
   context.fillStyle = "gold";
-  context.fillText(`${Money}`, 100, 38);
+  context.fillText(`${Money}`, 1200, 38);
   
   context.fillText(`${Bloons.length}`, 0, 100);
   
@@ -55,3 +56,4 @@ function Update(){ //This is for keeping the everything in game at the same size
   
 
 }
+Start();
