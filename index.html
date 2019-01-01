@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BTD Bahaa</title>
-  </head>
-  <body onload = "Start()">
-    <canvas id = "canvas"></canvas>
-    <canvas id = "mask"></canvas>
-    <link rel="stylesheet" type="text/css" href="Scripts/Style.css">
-    <script src = "Scripts/Maps/Map1.js"></script>
-    <script src = "Scripts/Difficulty.js"></script>
-    <script src = "Scripts/Start.js"></script>
-    <script src = "Scripts/Maps.js"></script>
-    <script src = "Scripts/Bloons.js"></script>
-    <script src = "Scripts/Rounds.js"></script>
-    <script src = "Scripts/Towers.js"></script>
-    <script src = "Scripts/Towers/DartMonkey.js"></script>
-  </body>
+
+<head>
+  <title>BTD Bahaa</title>
+  <link rel="stylesheet" type="text/css" href="Scripts/Style.css">
+  <script>
+    const c = document.querySelector(".console");
+    
+    console.log = (m) => c.appendChild(document.createTextNode("\n" + m));
+    console.error = (e) => {
+      const s = document.createElement("span");
+      s.textContent = "\n" + e;
+      s.style.color = "red";
+      c.appendChild(s);
+    };
+    
+    window.onerror = (e, s, l, c) => {
+      console.error(`Error: ${e} at: ${s}  : ${l} : ${c}`);
+    };
+  </script>
+  <script src="Scripts/Maps/Map1.js" defer></script>
+  <script src="Scripts/Difficulty.js" defer></script>
+  <script src="Scripts/Maps.js" defer></script>
+  <script src="Scripts/Bloons.js" defer></script>
+  <script src="Scripts/Rounds.js" defer></script>
+  <script src="Scripts/Towers.js" defer></script>
+  <script src="Scripts/Towers/DartMonkey.js" defer></script>
+  <script src="Scripts/Start.js" defer></script>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <pre class="console"></pre>
+</body>
+
 </html>
