@@ -1,5 +1,5 @@
 var Bloon0 = new Image();
-Bloon0.src = "./Assets/Sprites/Bloon.png";
+Bloon0.src = "./Assets/Sprites/Bloon0.png";
 var BloonSrc = new Image();
 
 
@@ -20,12 +20,13 @@ const Bloon = function(level, x, y) {
         
     
   this.animate = function(frame) {
+    var dur = this.speed;
     switch(level){
-      case 5: this.speed = 2.4; break;
-      case 4: this.speed = 2.0; break;
-      case 3: this.speed = 1.8; break;
-      case 2: this.speed = 1.2; break;
-      case 1: this.speed = 1.0; break;
+      case 1: this.speed = 24; break;
+      case 2: this.speed = 20; break;
+      case 3: this.speed = 18; break;
+      case 4: this.speed = 12; break;
+      case 5: this.speed = 10; break;
     }
     
   if (this.keyframe !== this.keyframes.length) {
@@ -45,14 +46,12 @@ const Bloon = function(level, x, y) {
     }
   }
   
-  const dur = 12;
-  if (!(frame % dur)) {
+  if ((frame % dur) === 0) {
     const [x, y] = this.move();
       this.keyframes.push([
         frame + dur, x, y,
       ]);
     }
-    if(this.y >= 50){
       BloonSrc.src = `./Assets/Sprites/Bloon${this.level}.png`;
       
       context.drawImage(BloonSrc, this.x + 5 , this.y + 5, 40, 40);
@@ -61,7 +60,6 @@ const Bloon = function(level, x, y) {
       
       context.drawImage(Bloon0, this.x + 5, this.y + 5, 40, 40);
       
-    }
     
   };
 
@@ -102,8 +100,8 @@ function CheckBloons() {
     for (let i = 0; i < Bloons.length; i++) {
 
         Bloons[i].animate(frame);
-        if(Bloons[i].level <= 0) Bloons.splice(i, 1);
-        if (MapSelected == Map1 && Bloons[i].x == 200 && Bloons[i].y == 700) {
+        if(Bloons[i].level <= 0) {Bloons.splice(i, 1); break}
+        if (MapSelected == Map1 && Bloons[i].x == 200 && Bloons[i].y == 600) {
             Lifes -= Bloons[i].level;
             Bloons.splice(i, 1);
 
