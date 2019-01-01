@@ -3,8 +3,13 @@
 
 <head>
   <title>BTD Bahaa</title>
+</head>
+
+<body>
+  <canvas id="canvas"></canvas>
+  <pre class="console"></pre>
   <link rel="stylesheet" type="text/css" href="Scripts/Style.css">
-  <script defer>
+  <script>
     const c = document.querySelector(".console");
     
     console.log = (m) => c.appendChild(document.createTextNode("\n" + m));
@@ -27,11 +32,6 @@
   <script src="Scripts/Towers.js" defer></script>
   <script src="Scripts/Towers/DartMonkey.js" defer></script>
   <script src="Scripts/Start.js" defer></script>
-</head>
-
-<body>
-  <canvas id="canvas"></canvas>
-  <pre class="console"></pre>
 </body>
 
 </html>
