@@ -4,7 +4,7 @@ const DartMonkey = function(x, y, time){
   this.range = 200; this.coolDown = 60; this.pierce = 1;this.mapSpot = 1; this.dartRange = this.range*1.5; this.layers = 1;
   DartMonkeyPrice = 200*Difficulty.Prices;
   this.draw = function(){
-      context.drawImage(DartMonkeySrc, x, y, 50, 50);
+      context.drawImage(dartMonkeyImg, x, y, 50, 50);
       //console.log(frame, this.time);
   };
   this.shoot = function(bx, by){
@@ -20,20 +20,20 @@ const DartMonkey = function(x, y, time){
 function ClickedOnDartMonkey(){
   document.body.style.cursor = "none";
   
-  TowerIsClicked = true;
-  TowerSelected = DartMonkeySrc;
+  towerIsClicked = true;
+  placingTower = dartMonkeyImg;
   
   window.addEventListener("mousemove", function(e){
     hoverX = e.pageX;
     hoverY = e.pageY;
-    CheckSpot(e.pageX, e.pageY);
+    placeTaken = checkSpot(e.pageX, e.pageY) !== undefined;
     });
   window.addEventListener ("click", function(e) {
-    if(TowerIsClicked){
+    if(towerIsClicked){
       if(MapSelected[Math.floor(e.pageY/50)][Math.floor(e.pageX/50)] == 1){
-        if(!PlaceTaken){
-            TowerIsClicked = false;
-            Towers.push(new DartMonkey(e.pageX-25, e.pageY-25, frame));
+        if(!placeTaken){
+            towerIsClicked = false;
+            towers.push(new DartMonkey(e.pageX-25, e.pageY-25, frame));
             Money -= DartMonkeyPrice;
             document.body.style.cursor = "default";
         }
