@@ -20,7 +20,6 @@ const Bloon = function(level, x, y) {
         
     
   this.animate = function(frame) {
-    var dur = this.speed;
     switch(level){
       case 1: this.speed = 24; break;
       case 2: this.speed = 20; break;
@@ -28,6 +27,7 @@ const Bloon = function(level, x, y) {
       case 4: this.speed = 12; break;
       case 5: this.speed = 10; break;
     }
+    var dur = this.speed;
     
   if (this.keyframe !== this.keyframes.length) {
     const cur = this.keyframes[this.keyframe - 1];
