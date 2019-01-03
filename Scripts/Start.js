@@ -2,8 +2,9 @@ const context = document.querySelector("#canvas").getContext("2d");
 var start;
 function Start() {
   start = setInterval(Update, 1000/60);
-      console.log("hi");
-
+  document.querySelector(".loader").style.display = "none";
+  document.querySelector("#canvas").style.backgroundImage = `url("./Assets/Sprites/Wood.jpg")`;
+  document.querySelector("#canvas").style.backgroundSize = "50px 50px";
 }
 var width = document.documentElement.clientWidth;
 var height = document.documentElement.clientHeight;
@@ -52,8 +53,9 @@ function Update(){ //This is for keeping the everything in game at the same size
   
   CheckBloons();
   
-  DisplayTowers();
+  checkDarts();
   
+  displayTowers();
 
 }
-Start();
+window.onload = Start;
