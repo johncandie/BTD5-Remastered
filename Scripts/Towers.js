@@ -1,32 +1,30 @@
-var DartMonkeySrc = new Image();
-DartMonkeySrc.src = "./Assets/Sprites/DartMonkey.png";
+var dartMonkeyImg = new Image();
+dartMonkeyImg.src = "./Assets/Sprites/DartMonkey.png";
 
-var Towers = new Array();
+var towers = new Array();
 
 var Darts = new Array();
 
-var TowerIsClicked = false;
+var towerIsClicked = false;
 
-var TowerSelected;
+var placingTower;
 
-
-var clickX;
-var clickY;
 
 var hoverX = 0;
 var hoverY = 0;
 
-var PlaceTaken = false;
-
-
+var placeTaken = false;
+var clickX;
+var clickY;
 window.addEventListener("click", function(e) {
     clickX = e.pageX;
     clickY = e.pageY;
-    if(!TowerIsClicked) {
-      CheckSpot(clickX, clickY);
-      if(PlaceTaken){
-        var tower = CheckSpot(clickX, clickY);
-        console.log(tower);
+    
+    if(!towerIsClicked) {
+      checkSpot(clickX, clickY);
+      if(placeTaken){
+        var tower = checkSpot(clickX, clickY);
+        console.log(tower.x +", "+tower.y);
       }
     }
 
@@ -38,59 +36,58 @@ window.addEventListener("keydown", function(e) {
     }
     if (e.keyCode === 27) {
         document.body.style.cursor = "default";
-        TowerIsClicked = false;
+        towerIsClicked = false;
     }
 });
 
 
 
-function CheckSpot(x, y) {
-    for (let i = 0; i < Towers.length; i++) {
-        if (x >= Towers[i].x && x <= Towers[i].x + 50 && y >= Towers[i].y && y <= Towers[i].y + 50) {
-            PlaceTaken = true;
-            break;
-        } else PlaceTaken = false;
-    }
-    if(PlaceTaken){
-      return Towers[parseInt(i)];
-    }
+function checkSpot(x, y) {
+    return towers.find(tower =>
+        x >= tower.x && x <= tower.x + 50 && y >= tower.y && y <= tower.y + 50);
 }
 
 
+function towerSelcted(){
+  
+}
 
-function DisplayTowers() {
-    context.drawImage(DartMonkeySrc, 1200, 100, 60, 60);
-    for (let T = 0; T < Towers.length; T++) {
-        Towers[T].draw();
-        for (let B = 0; B < Bloons.length; B++) {
-            let dx = Towers[T].x - Bloons[B].x;
-            let dy = Towers[T].y - Bloons[B].y;
-            let Distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (Distance <= Towers[T].range + 50) {
-                Towers[T].shoot(Bloons[B].x, Bloons[B].y);
-            }
-        }
-    }
-    var shadeBlack = true;
-    if(PlaceTaken === true) {shadeBlack = false;} else {shadeBlake = true}
+function displayTowers() {
+    context.drawImage(dartMonkeyImg, 1200, 100, 60, 60);
+    let shadeBlack = !placeTaken && MapSelected[Math.floor(hoverY/50)][Math.floor(hoverX/50)] == 1;
     var Color = 'rgb(255, 0, 0, 0.52)';
-    if (TowerIsClicked) {
-        context.drawImage(TowerSelected, hoverX - 25, hoverY - 25, 50, 50);
-        if(MapSelected[Math.floor(hoverY/50)][Math.floor(hoverX/50)] != 1){shadeBlack = false;}
+    if (towerIsClicked) {
+        context.drawImage(placingTower, hoverX - 25, hoverY - 25, 50, 50);
         Color = 'rgb(0, 0, 0, 0.5)';
-        switch (shadeBlack) {
+                switch (shadeBlack) {
             case false:
                 Color = 'rgb(255, 0, 0, 0.52)';
                 break;
             case true:
                 Color = 'rgb(0, 0, 1, 0.5)';
         }
+        if(shadeBlack) {color = "rgb(255, 0, 0, 0.52)"} else  Color = 'rgb(255, 0, 1, 0.52)';
         context.arc(hoverX, hoverY, 200, 0, 2 * Math.PI, false);
         context.fillStyle = Color;
         context.fill();
     }
 
+
+}
+function checkDarts(){
+      for (let T = 0; T < towers.length; T++) {
+        towers[T].draw();
+        for (let B = 0; B < Bloons.length; B++) {
+            let dx = towers[T].x - Bloons[B].x;
+            let dy = towers[T].y - Bloons[B].y;
+            let Distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (Distance <= towers[T].range + 50) {
+                towers[T].shoot(Bloons[B].x, Bloons[B].y);
+            }
+        }
+    }
     for (let D = 0; D < Darts.length; D++) {
         Darts[D].animate();
         for (let B = 0; B < Bloons.length; B++){
