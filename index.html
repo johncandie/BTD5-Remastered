@@ -3,6 +3,7 @@
 
 <head>
   <title>BTD Bahaa</title>
+  <link rel="shortcut icon" href="Assets/Sprites/icon.png" defer>
 </head>
 
 <body>
@@ -22,6 +23,8 @@
     console.error = (e) => {
       const s = document.createElement("span");
       s.textContent = "\n" + e;
+      s.style.color = "red"
+      s.style.position = "relative"
       c.appendChild(s);
     };
     
