@@ -1,6 +1,4 @@
-var Bloon0 = new Image();
-Bloon0.src = "./Assets/Sprites/Bloon0.png";
-var BloonSrc = new Image();
+
 
 
 const Bloon = function(level, x, y) {
@@ -52,12 +50,17 @@ const Bloon = function(level, x, y) {
         frame + dur, x, y,
       ]);
     }
+      var BloonSrc = new Image();
       BloonSrc.src = `./Assets/Sprites/Bloon${this.level}.png`;
       
-      context.drawImage(BloonSrc, this.x + 5 , this.y + 5, 40, 40);
+      var Bloon0 = new Image();
+      Bloon0.src = "./Assets/Sprites/Bloon0.png";
       
+      context.drawImage(BloonSrc, this.x + 5 , this.y + 5, 40, 40);
       context.drawImage(Bloon0, this.x + 5, this.y + 5, 40, 40);
-
+      
+      
+      
   };
 
   this.move = function(){
