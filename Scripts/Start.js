@@ -25,9 +25,9 @@ switch(Difficulty){
   case Easy:   Lifes = Easy.Lifes; Money = Easy.Money; break;
 }
 
-function Update(){ //This is for keeping the everything in game at the same size when the screen change.
+function Update(){
   frame++;
-
+ //This is for keeping the everything in game at the same size when the screen change.
   width = document.documentElement.clientWidth;
   height = document.documentElement.clientHeight;
 
@@ -56,6 +56,7 @@ function Update(){ //This is for keeping the everything in game at the same size
   checkDarts();
   
   displayTowers();
+  
 
 }
 window.onload = Start;
