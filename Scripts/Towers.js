@@ -1,5 +1,7 @@
-var dartMonkeyImg = new Image();
-dartMonkeyImg.src = "./Assets/Sprites/DartMonkey.png";
+var inGame = new Image();
+  inGame.src = "./Assets/Sprites/InGame.png";
+var inGameHud = new Image();
+  inGameHud.src = "./Assets/Sprites/inGameHud.png";
 
 var towers = new Array();
 
@@ -14,8 +16,11 @@ var hoverX = 0;
 var hoverY = 0;
 
 var placeTaken = false;
+
 var clickX;
 var clickY;
+
+var upgradeMenu;
 window.addEventListener("click", function(e) {
     clickX = e.pageX;
     clickY = e.pageY;
@@ -24,49 +29,45 @@ window.addEventListener("click", function(e) {
       checkSpot(clickX, clickY);
       if(placeTaken){
         var tower = checkSpot(clickX, clickY);
-        console.log(tower.x +", "+tower.y);
-      }
+        upgradeMenu = setInterval(towerSelcted, 1000/60, tower);
+      } else {clearInterval(upgradeMenu)}
     }
 
-    if (clickX >= 1200 && clickX <= 1250 && clickY >= 100 && clickY <= 150 && Money >= DartMonkeyPrice) ClickedOnDartMonkey();
+    if (clickX >= 1200 && clickX <= 1268 && clickY >= 100 && clickY <= 174 && Money >= dartMonkey.price) ClickedOnDartMonkey();
 });
 window.addEventListener("keydown", function(e) {
-    if (e.keyCode === 81 && Money >= DartMonkeyPrice) {
-        ClickedOnDartMonkey();
-    }
-    if (e.keyCode === 27) {
-        document.body.style.cursor = "default";
-        towerIsClicked = false;
-    }
+    if (e.keyCode === 81 && Money >= dartMonkey.price) ClickedOnDartMonkey();
+    if (e.keyCode === 27) {document.body.style.cursor = "default";towerIsClicked = false; clearInterval(upgradeMenu)}
 });
 
 
 
 function checkSpot(x, y) {
-    return towers.find(tower =>
-        x >= tower.x && x <= tower.x + 50 && y >= tower.y && y <= tower.y + 50);
+    return towers.find(tower => x >= tower.x && x <= tower.x + 50 && y >= tower.y && y <= tower.y + 50);
 }
 
 
-function towerSelcted(){
+function towerSelcted(tower){
+  if(tower.upgrade2 > tower.upgrade1){
+    let picture = dartMonkey.profilePictures.left[tower.upgrade1];
+    context.drawImage(inGameHud, picture.x, picture.y, picture.w, picture.h, 300, 1300, picture.dw, picture.dh);
+  }
   
+  if(tower.upgrade1 >= tower.upgrade2){
+    let picture = dartMonkey.profilePictures.right[tower.upgrade2];
+    context.drawImage(inGameHud, picture.x, picture.y, picture.w, picture.h, 300, 1300, picture.dw, picture.dh);
+    context.fillRect(300, 1300, picture.dw, picture.dh);
+  }
 }
 
 
 function displayTowers() {
-    context.drawImage(dartMonkeyImg, 1200, 100, 60, 60);
+    context.drawImage(inGameHud, dartMonkey.shop.x, dartMonkey.shop.y, dartMonkey.shop.w, dartMonkey.shop.h, 1200, 100, 48, 54);
     let shadeBlack = !placeTaken && MapSelected[Math.floor(hoverY/50)][Math.floor(hoverX/50)] == 1;
-    var Color = 'rgb(255, 0, 0, 0.52)';
+    var Color;
     if (towerIsClicked) {
-        context.drawImage(placingTower, hoverX - 25, hoverY - 25, 50, 50);
+        context.drawImage(inGame, placingTower.avatars.left[0].x, placingTower.avatars.left[0].y, placingTower.avatars.left[0].w, placingTower.avatars.left[0].h, hoverX - 25, hoverY - 25, 48, 50);
         Color = 'rgb(0, 0, 0, 0.5)';
-                switch (shadeBlack) {
-            case false:
-                Color = 'rgb(255, 0, 0, 0.52)';
-                break;
-            case true:
-                Color = 'rgb(0, 0, 1, 0.5)';
-        }
         if(shadeBlack) {color = "rgb(255, 0, 0, 0.52)"} else  Color = 'rgb(255, 0, 1, 0.52)';
         context.arc(hoverX, hoverY, 200, 0, 2 * Math.PI, false);
         context.fillStyle = Color;
