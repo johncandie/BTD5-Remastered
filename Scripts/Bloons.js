@@ -56,7 +56,8 @@ const Bloon = function(level, x, y) {
       
       context.drawImage(BloonSrc, this.x + 5 , this.y + 5, 40, 40);
       
-      
+      context.drawImage(Bloon0, this.x + 5, this.y + 5, 40, 40);
+
   };
 
   this.move = function(){
