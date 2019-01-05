@@ -48,9 +48,7 @@ function Update(){
  
   context.fillStyle = "gold";
   context.fillText(`${Money}`, 1200, 38);
-  
-  context.fillText(`${Bloons.length}`, 0, 100);
-  
+    
   CheckBloons();
   
   checkDarts();
