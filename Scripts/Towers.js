@@ -68,7 +68,7 @@ function displayTowers() {
     if (towerIsClicked) {
         context.drawImage(inGame, placingTower.avatars.left[0].x, placingTower.avatars.left[0].y, placingTower.avatars.left[0].w, placingTower.avatars.left[0].h, hoverX - 25, hoverY - 25, 48, 50);
         Color = 'rgb(0, 0, 0, 0.5)';
-        if(shadeBlack) {color = "rgb(255, 0, 0, 0.52)"} else  Color = 'rgb(255, 0, 1, 0.52)';
+        if(shadeBlack) {color = "rgb(0, 0, 0, 0.52)"} else  Color = 'rgb(255, 0, 1, 0.52)';
         context.arc(hoverX, hoverY, 200, 0, 2 * Math.PI, false);
         context.fillStyle = Color;
         context.fill();
